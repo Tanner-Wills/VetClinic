@@ -24,7 +24,7 @@ public class Clinic {
 
     //Clinic Methods
     public String nextDay(File f) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(f));
+        Scanner scanner = new Scanner("C:\\Users\\dvuf0zn\\IdeaProjects\\VetClinic\\Appointments.csv");
         scanner.useDelimiter(",");
         String appoint = "Consultation for " + scanner.next() + " the " + scanner.next() + " at " + scanner.next() + ".\nWhat is the health of " + scanner.next() + "?\n";
         System.out.println(appoint);
@@ -33,12 +33,12 @@ public class Clinic {
         return appoint;
     }
     public String nextDay(String filename){
-        Scanner scanner = new Scanner("C:\\Users\\dvuf0zn\\IdeaProjects\\VetClinic\\src\\Appointments.csv");
+        Scanner scanner = new Scanner("C:\\Users\\dvuf0zn\\IdeaProjects\\VetClinic\\Appointments.csv");
         scanner.useDelimiter(",");
         String appoint = "Consultation for " + scanner.next() + " the " + scanner.next() + " at " + scanner.next() + ".\nWhat is the health of " + scanner.next() + "?\n";
         System.out.println(appoint);
         scanner.close();
-        BufferedReader
+
         return appoint;
     }
 }
