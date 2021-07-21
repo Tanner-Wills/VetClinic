@@ -14,12 +14,12 @@ public class Clinic {
     //Constructor
     public Clinic(File file) {
         this.patientFile = file;
-
+        day = 1;
     }
 
     public Clinic(String filename) {
         this(new File(filename));
-
+        day = 1;
     }
 
     //Clinic Methods
@@ -27,11 +27,7 @@ public class Clinic {
         Scanner scanner = new Scanner(new File(String.valueOf(f)));
         scanner.useDelimiter(",");
 
-        String appoint = "Consultation for " + scanner.next() + " the " + scanner.next() + " at " + scanner.next() + ".\nWhat is the health of " + scanner.next() + "?\n";
-        System.out.println(appoint);
-        scanner.close();
-
-        return appoint;
+        return "a";
     }
     public String nextDay(String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
@@ -50,11 +46,10 @@ public class Clinic {
             }
             String military = token[3];
 
-            //Print initial message from Clinic
-            String appoint = "Consultation for " + name + " the " + typeOfPet + " at " + miltime(military) + ".\nWhat is the health of " + name + "?\n";
-            System.out.println(appoint);
-            //scanner.close();
 
+            //Print initial message from Clinic
+            String appoint = "Consultation for " + name + " the " + typeOfPet + " at " + milTime(military) + ".\nWhat is the health of " + name + "?\n";
+            System.out.println(appoint);
 
             //Request user input for health of patient
             int healthFind = 0;
@@ -63,9 +58,8 @@ public class Clinic {
                 if(inputHealth.hasNextInt()){
                     int health = inputHealth.nextInt();
                     healthFind = 1;
-                    //scanner.close();
                 } else {
-                    System.out.println("Please enter a number \n What is the health of" + name + "?");
+                    System.out.println("Please enter a number\nWhat is the health of" + name + "?");
                     inputHealth.nextLine();
                 }
             }
@@ -78,9 +72,8 @@ public class Clinic {
                 if(inputPain.hasNextInt()){
                     int pain = inputPain.nextInt();
                     painFind = 1;
-                    //scanner.close();
                 } else {
-                    System.out.println("Please enter a number \nOn a scale of 1 to 10, how much pain is " + name + " in right now? \n");
+                    System.out.println("Please enter a number\nOn a scale of 1 to 10, how much pain is " + name + " in right now? \n");
                     inputPain.nextLine();
                 }
             }
@@ -92,7 +85,7 @@ public class Clinic {
 
 
 
-    private String miltime(String military){
+    private String milTime(String military){
         String hours;
         String minutes;
         int hour0 = Integer.parseInt(Character.toString(military.charAt(0)));
