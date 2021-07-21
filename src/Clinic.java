@@ -37,26 +37,59 @@ public class Clinic {
         Scanner scanner = new Scanner(new File(filename));
         String patient = null;
 
+        //Loop through file to obtain information from patients and assign to variables.
         while(scanner.hasNextLine()){
             patient = scanner.nextLine();
             String[] token = patient.split(",");
             String name = token[0];
             String typeOfPet = token[1];
             if(typeOfPet == "Dog"){
-                String droolRate = token[2];
-                //double droolRate = Double.parseDouble(token[2]);
+                double droolRate = Double.parseDouble(token[2]);
             } else if (typeOfPet == "Cat") {
-                String miceCaught = token[2];
-                //int miceCaught = Integer.parseInt(token[2]);
+                int miceCaught = Integer.parseInt(token[2]);
             }
             String military = token[3];
 
+            //Print initial message from Clinic
             String appoint = "Consultation for " + name + " the " + typeOfPet + " at " + miltime(military) + ".\nWhat is the health of " + name + "?\n";
             System.out.println(appoint);
+            //scanner.close();
+
+
+            //Request user input for health of patient
+            int healthFind = 0;
+            Scanner inputHealth = new Scanner(System.in);
+            while(healthFind < 1){
+                if(inputHealth.hasNextInt()){
+                    int health = inputHealth.nextInt();
+                    healthFind = 1;
+                    //scanner.close();
+                } else {
+                    System.out.println("Please enter a number \n What is the health of" + name + "?");
+                    inputHealth.nextLine();
+                }
+            }
+
+            //Request user input for pain of patient
+            System.out.println("On a scale of 1 to 10, how much pain is " + name + " in right now? \n");
+            int painFind = 0;
+            Scanner inputPain = new Scanner(System.in);
+            while(painFind < 1){
+                if(inputPain.hasNextInt()){
+                    int pain = inputPain.nextInt();
+                    painFind = 1;
+                    //scanner.close();
+                } else {
+                    System.out.println("Please enter a number \nOn a scale of 1 to 10, how much pain is " + name + " in right now? \n");
+                    inputPain.nextLine();
+                }
+            }
         }
         scanner.close();
         return patient;
     }
+
+
 
 
     private String miltime(String military){
