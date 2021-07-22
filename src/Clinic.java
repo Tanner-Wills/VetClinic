@@ -71,14 +71,12 @@ public class Clinic {
             patientPet.speak();
 
             //Calculate time to treat the patient
-            String outTime = String.valueOf(Integer.parseInt(military) + patientPet.treat());
-            if(Integer.parseInt(military) < 1000){
-                outTime = "0" + outTime;
-            }
-            patientPet.treat();
+            int timeToTreat = patientPet.treat();
+            String timeFinish = addTime(military, timeToTreat);
 
             //Append patient data to string
-            petData += String.join(",",name, typeOfPet, miceDrool, "Day " + day, military, outTime, String.valueOf(health), painLevel + "\n");
+            petData += String.join(",",name, typeOfPet, miceDrool, "Day " + day, military, timeFinish, String.valueOf(patientPet.getHealth()), String.valueOf(patientPet.getPainLevel()) + "\n");
+            patientPet.treat();
             day += 1;
 
         }
@@ -90,7 +88,7 @@ public class Clinic {
 
 
     public boolean addToFile(String patientInfo){
-
+        return true;
     }
     private double userData(){
         boolean success = false;
@@ -138,6 +136,14 @@ public class Clinic {
             minutes = hour2str + hour3str + " am";
         }
         return military = hours + ":" + minutes;
+    }
+
+    private String addTime(String timeIn, int treatmentTime){
+        String outTime = String.valueOf(Integer.parseInt(timeIn) + treatmentTime);
+        if(Integer.parseInt(outTime) < 1000){
+            outTime = "0" + outTime;
+        }
+        return outTime;
     }
 
 }
