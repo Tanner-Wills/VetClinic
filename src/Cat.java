@@ -28,7 +28,6 @@ public class Cat extends Pet {
     //Cat Methods
     @Override
     public int treat(){
-        super.heal();
         int treatTime;
         if (this.miceCaught < 4) {
             treatTime = ((int) ((this.getPainLevel() * 2) / this.getHealth()));
@@ -37,6 +36,7 @@ public class Cat extends Pet {
         } else {
             treatTime = ((int) (this.getPainLevel() / (this.getHealth() * 2)));
         }
+        super.heal();
         return treatTime;
     }
 

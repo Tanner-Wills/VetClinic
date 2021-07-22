@@ -33,6 +33,8 @@ public class Clinic {
         Scanner scanner = new Scanner(new File(filename));
         String patient = "";
         String petData = "";
+        Pet patientPet = null;
+        String miceDrool = "";
 
         //Loop through file to obtain information from patients and assign to variables.
         while(scanner.hasNextLine()){
@@ -47,23 +49,16 @@ public class Clinic {
             System.out.println(appoint);
 
             //Request user input for health of patient
-            int health = userData();
+            double health = userData();
 
             //Request user input for pain of patient
             System.out.println("On a scale of 1 to 10, how much pain is " + name + " in right now? \n");
             int painLevel = userData();
 
-
-
-            Pet patientPet = null;
-            String miceDrool = null;
-
             if(typeOfPet.equals("Dog")){
                 double droolRate = Double.parseDouble(token[2]);
                 miceDrool = String.valueOf(droolRate);
                 patientPet = new Dog(name, health, painLevel, droolRate);
-
-
 
             } else if (typeOfPet.equals("Cat")){
                 int miceCaught = Integer.parseInt(token[2]);
@@ -71,12 +66,18 @@ public class Clinic {
                 patientPet = new Cat(name, health, painLevel, miceCaught);
             }
 
-
+            //Have patient speak
             patientPet.speak();
-            patientPet.treat();
-            int outTime = patientPet.treat();
 
-            petData += String.join(",",name, typeOfPet, miceDrool, "Day" + day, military, String.valueOf(outTime), String.valueOf(health), painLevel + "\n");
+            //Calulate time to treat the patient
+            String outTime = String.valueOf(Integer.parseInt(military) + patientPet.treat());
+            if(Integer.parseInt(military) < 1000){
+                outTime = "0" + outTime;
+            }
+            patientPet.treat();
+
+            //Append patient data to string
+            petData += String.join(",",name, typeOfPet, miceDrool, "Day " + day, military, outTime, String.valueOf(health), painLevel + "\n");
             day += 1;
         }
 
