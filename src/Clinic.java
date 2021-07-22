@@ -53,7 +53,7 @@ public class Clinic {
 
             //Request user input for pain of patient
             System.out.println("On a scale of 1 to 10, how much pain is " + name + " in right now? \n");
-            int painLevel = userData();
+            int painLevel = ((int)userData());
 
             //Determine Class type of patient
             if(typeOfPet.equals("Dog")){
@@ -80,6 +80,7 @@ public class Clinic {
             //Append patient data to string
             petData += String.join(",",name, typeOfPet, miceDrool, "Day " + day, military, outTime, String.valueOf(health), painLevel + "\n");
             day += 1;
+
         }
 
         scanner.close();
@@ -88,19 +89,22 @@ public class Clinic {
     }
 
 
-    private int userData(){
+    public boolean addToFile(String patientInfo){
+
+    }
+    private double userData(){
         boolean success = false;
 
         Scanner userIn = new Scanner(System.in);
         while(!success){
-            if(userIn.hasNextInt()){
+            if(userIn.hasNextDouble()){
                 success = true;
             } else {
                 System.out.println("Please enter a number.");
                 userIn.nextLine();
             }
         }
-        return userIn.nextInt();
+        return userIn.nextDouble();
     }
 
     private String milTime(String military){
