@@ -29,15 +29,15 @@ public class Cat extends Pet {
     @Override
     public int treat(){
         super.heal();
-        int treatment;
+        int treatTime;
         if (this.miceCaught < 4) {
-            treatment = ((int) ((this.getPainLevel() * 2) / this.getHealth()));
+            treatTime = ((int) ((this.getPainLevel() * 2) / this.getHealth()));
         } else if (this.getMiceCaught() >= 4 && this.getMiceCaught() <= 7) {
-            treatment = ((int) (this.getPainLevel() / this.getHealth()));
+            treatTime = ((int) (this.getPainLevel() / this.getHealth()));
         } else {
-            treatment = ((int) (this.getPainLevel() / (this.getHealth() * 2)));
+            treatTime = ((int) (this.getPainLevel() / (this.getHealth() * 2)));
         }
-        return treatment;
+        return treatTime;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Cat extends Pet {
         String meow = "meow ".repeat(this.getMiceCaught()).trim();
         meow = this.getMiceCaught() > 5 ? meow.toUpperCase(Locale.ROOT) : meow;
         super.speak();
-        System.out.println(meow);
+        System.out.println(meow + "\n");
     }
 
     public boolean equals(Object o){

@@ -31,7 +31,8 @@ public class Clinic {
     }
     public String nextDay(String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
-        String patient = null;
+        String patient = "";
+        String petData = "";
 
         //Loop through file to obtain information from patients and assign to variables.
         while(scanner.hasNextLine()){
@@ -39,51 +40,66 @@ public class Clinic {
             String[] token = patient.split(",");
             String name = token[0];
             String typeOfPet = token[1];
-            if(typeOfPet == "Dog"){
-                double droolRate = Double.parseDouble(token[2]);
-            } else if (typeOfPet == "Cat") {
-                int miceCaught = Integer.parseInt(token[2]);
-            }
             String military = token[3];
-
 
             //Print initial message from Clinic
             String appoint = "Consultation for " + name + " the " + typeOfPet + " at " + milTime(military) + ".\nWhat is the health of " + name + "?\n";
             System.out.println(appoint);
 
             //Request user input for health of patient
-            int healthFind = 0;
-            Scanner inputHealth = new Scanner(System.in);
-            while(healthFind < 1){
-                if(inputHealth.hasNextInt()){
-                    int health = inputHealth.nextInt();
-                    healthFind = 1;
-                } else {
-                    System.out.println("Please enter a number\nWhat is the health of" + name + "?");
-                    inputHealth.nextLine();
-                }
-            }
+            int health = userData();
 
             //Request user input for pain of patient
             System.out.println("On a scale of 1 to 10, how much pain is " + name + " in right now? \n");
-            int painFind = 0;
-            Scanner inputPain = new Scanner(System.in);
-            while(painFind < 1){
-                if(inputPain.hasNextInt()){
-                    int pain = inputPain.nextInt();
-                    painFind = 1;
-                } else {
-                    System.out.println("Please enter a number\nOn a scale of 1 to 10, how much pain is " + name + " in right now? \n");
-                    inputPain.nextLine();
-                }
+            int painLevel = userData();
+
+
+
+            Pet patientPet = null;
+            String miceDrool = null;
+
+            if(typeOfPet.equals("Dog")){
+                double droolRate = Double.parseDouble(token[2]);
+                miceDrool = String.valueOf(droolRate);
+                patientPet = new Dog(name, health, painLevel, droolRate);
+
+
+
+            } else if (typeOfPet.equals("Cat")){
+                int miceCaught = Integer.parseInt(token[2]);
+                miceDrool = String.valueOf(miceCaught);
+                patientPet = new Cat(name, health, painLevel, miceCaught);
             }
+
+
+            patientPet.speak();
+            patientPet.treat();
+            int outTime = patientPet.treat();
+
+            petData += String.join(",",name, typeOfPet, miceDrool, "Day" + day, military, String.valueOf(outTime), String.valueOf(health), painLevel + "\n");
+            day += 1;
         }
+
         scanner.close();
-        return patient;
+        System.out.println(petData);
+        return petData;
     }
 
 
+    private int userData(){
+        boolean success = false;
 
+        Scanner userIn = new Scanner(System.in);
+        while(!success){
+            if(userIn.hasNextInt()){
+                success = true;
+            } else {
+                System.out.println("Please enter a number.");
+                userIn.nextLine();
+            }
+        }
+        return userIn.nextInt();
+    }
 
     private String milTime(String military){
         String hours;

@@ -31,15 +31,15 @@ public class Dog extends Pet {
     @Override
     public int treat() {
         super.heal();
-        int treatment;
+        int treatTime;
         if (this.droolRate < 3.5) {
-            treatment = ((int) ((this.getPainLevel() * 2) / this.getHealth()));
+            treatTime = ((int) ((this.getPainLevel() * 2) / this.getHealth()));
         } else if (this.droolRate >= 3.5 && this.droolRate <= 7.5) {
-            treatment = ((int) (this.getPainLevel() / this.getHealth()));
+            treatTime = ((int) (this.getPainLevel() / this.getHealth()));
         } else {
-            treatment = ((int) (this.getPainLevel() / (this.getHealth() * 2)));
+            treatTime = ((int) (this.getPainLevel() / (this.getHealth() * 2)));
         }
-        return treatment;
+        return treatTime;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Dog extends Pet {
         String bark = "bark ".repeat(this.getPainLevel()).trim();
         bark = this.getPainLevel() > 5 ? bark.toUpperCase(Locale.ROOT): bark;
         super.speak();
-        System.out.println(bark);
+        System.out.println(bark + "\n");
         }
 
     @Override
