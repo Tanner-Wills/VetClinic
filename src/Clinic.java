@@ -55,6 +55,7 @@ public class Clinic {
             System.out.println("On a scale of 1 to 10, how much pain is " + name + " in right now? \n");
             int painLevel = userData();
 
+            //Determine Class type of patient
             if(typeOfPet.equals("Dog")){
                 double droolRate = Double.parseDouble(token[2]);
                 miceDrool = String.valueOf(droolRate);
@@ -69,7 +70,7 @@ public class Clinic {
             //Have patient speak
             patientPet.speak();
 
-            //Calulate time to treat the patient
+            //Calculate time to treat the patient
             String outTime = String.valueOf(Integer.parseInt(military) + patientPet.treat());
             if(Integer.parseInt(military) < 1000){
                 outTime = "0" + outTime;
