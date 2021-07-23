@@ -30,7 +30,6 @@ public class Dog extends Pet {
     //Dog Methods
     @Override
     public int treat() {
-
         int treatTime;
         if (this.droolRate < 3.5) {
             treatTime = ((int) ((this.getPainLevel() * 2) / this.getHealth()));

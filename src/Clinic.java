@@ -25,10 +25,60 @@ public class Clinic {
     //Clinic Methods
     public String nextDay(File f) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(String.valueOf(f)));
-        scanner.useDelimiter(",");
+        String patient = "";
+        String petData = "";
+        Pet patientPet = null;
+        String miceDrool = "";
 
-        return "a";
+        //Loop through file to obtain information from patients and assign to variables.
+        while(scanner.hasNextLine()){
+            patient = scanner.nextLine();
+            String[] token = patient.split(",");
+            String name = token[0];
+            String typeOfPet = token[1];
+            String military = token[3];
+
+            //Print initial message from Clinic
+            String appoint = "Consultation for " + name + " the " + typeOfPet + " at " + milTime(military) + ".\nWhat is the health of " + name + "?\n";
+            System.out.println(appoint);
+
+            //Request user input for health of patient
+            double health = userData();
+
+            //Request user input for pain of patient
+            System.out.println("On a scale of 1 to 10, how much pain is " + name + " in right now? \n");
+            int painLevel = ((int)userData());
+
+            //Determine Class type of patient
+            if(typeOfPet.equals("Dog")){
+                double droolRate = Double.parseDouble(token[2]);
+                miceDrool = String.valueOf(droolRate);
+                patientPet = new Dog(name, health, painLevel, droolRate);
+
+            } else if (typeOfPet.equals("Cat")){
+                int miceCaught = Integer.parseInt(token[2]);
+                miceDrool = String.valueOf(miceCaught);
+                patientPet = new Cat(name, health, painLevel, miceCaught);
+            }
+
+            //Placeholder variable for initial health before treatment
+            double initialHealth = patientPet.getHealth();
+            int initialPain = patientPet.getPainLevel();;
+
+            //Have patient speak
+            patientPet.speak();
+
+            //Append patient data to string
+            petData += String.join(",",name, typeOfPet, miceDrool, "Day " + day, military, addTime(military, patientPet.treat()), String.valueOf(initialHealth), String.valueOf(initialPain) + "\n");
+            patientPet.treat();
+        }
+        //Increment day
+        day += 1;
+
+        scanner.close();
+        return petData;
     }
+
     public String nextDay(String filename) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filename));
         String patient = "";
@@ -66,30 +116,36 @@ public class Clinic {
                 miceDrool = String.valueOf(miceCaught);
                 patientPet = new Cat(name, health, painLevel, miceCaught);
             }
+            double initialHealth = patientPet.getHealth();
+            int initialPain = patientPet.getPainLevel();;
 
             //Have patient speak
             patientPet.speak();
 
-            //Calculate time to treat the patient
-            int timeToTreat = patientPet.treat();
-            String timeFinish = addTime(military, timeToTreat);
-
             //Append patient data to string
-            petData += String.join(",",name, typeOfPet, miceDrool, "Day " + day, military, timeFinish, String.valueOf(patientPet.getHealth()), String.valueOf(patientPet.getPainLevel()) + "\n");
+            petData += String.join(",",name, typeOfPet, miceDrool, "Day " + day, military, addTime(military, patientPet.treat()), String.valueOf(initialHealth), String.valueOf(initialPain) + "\n");
             patientPet.treat();
             day += 1;
-
         }
-
         scanner.close();
-        System.out.println(petData);
         return petData;
     }
 
 
-    public boolean addToFile(String patientInfo){
+    public boolean addToFile(String patientInfo) throws FileNotFoundException {
+        Scanner fileReader = new Scanner(new String(patientInfo));
+        PrintWriter fileWriter = new PrintWriter(patientFile);
+
+        while (fileReader.hasNextLine()) {
+            String patientLine = fileReader.nextLine();
+            fileWriter.write(patientLine);
+
+        }
+        fileReader.close();
+        System.out.println(patientFile);
         return true;
     }
+
     private double userData(){
         boolean success = false;
 
